@@ -14,10 +14,12 @@ describe('BankAccount', () => {
         it('should return the addittion of a new amount to the balance', () => {
             let amount1 = 3000;
             const bankAccount = new BankAccount(amount1);
+            const bankAccount2 = new BankAccount(amount1);
+
             let amount2 = 5000;
             let amount3 = -2000;
             assert.equal(amount1+amount2, bankAccount.append(amount2)); //deberia regresar la suma de amount 1 y 2 
-            assert.equal(amount1, bankAccount.append(amount3)); //deberia regresar amount1
+            assert.equal(amount1, bankAccount2.append(amount3)); //deberia regresar amount1
         })
     })
 
@@ -25,36 +27,42 @@ describe('BankAccount', () => {
         it('should return the substraction of an amount to the current balance', () => {
             let amount1 = 3000;
             const bankAccount = new BankAccount(amount1);
+            const bankAccount2 = new BankAccount(amount1);
             let amount2 = 5000;
             let amount3 = -2000;
             assert.equal(amount1-amount2, bankAccount.substract(amount2)); //deberia regresar la resta de amount 1 y 2 
-            assert.equal(amount1, bankAccount.substract(amount3)); //deberia regresar amount1
+            assert.equal(amount1, bankAccount2.substract(amount3)); //deberia regresar amount1
         })
     })
 
     describe('#Merge', () => {
-        it('should return the merge two Accounts', () => {
-            //Declarar bankAccounts
-            let amount1 = 3000;
-            const bankAccount = new BankAccount(amount1);
-            let amount2 = 5000;
-            const bankAccount2 = new BankAccount(amount2);
+        //Declarar bankAccounts
+        let amount1 = 3000;
+        const bankAccount = new BankAccount(amount1);
+        let amount2 = 5000;
+        const bankAccount2 = new BankAccount(amount2);
 
-            //Darles historial crediticio
-            let amount3 = 6000;
-            let amount4 = 2000;
-            bankAccount.append(amount3);
-            bankAccount2.substract(amount4);
+        //Darles historial crediticio
+        let amount3 = 6000;
+        let amount4 = 8000;
+        bankAccount.append(amount3);
+        bankAccount2.substract(amount4);
 
-            //Merge de las cuentas
-            bankAccount.merge(bankAccount2);
+        //Merge de las cuentas
+        bankAccount.merge(bankAccount2);
 
-            //prueba
-            assert.deepEqual([
-                {type: "append", amount: amount3, balance: amount1 + amount3},
-                {type: "substract", amount: amount4, balance: amount2 - amount4}
-            ], bankAccount.history())
+        it('should return the merged history of two Accounts', () => {
+            //prueba history
+            assert.deepEqual(
+                [
+                    {type: "append", amount: amount3, balance: amount1 + amount3},
+                    {type: "substract", amount: amount4, balance: amount2 - amount4}
+                ], bankAccount.getHistory())
         })
+
+        it('should return the current balance of the merged accounts', () => {
+            assert.equal(amount1 + amount3 + amount2 - amount4, bankAccount.getAmount());
+        })        
     })
 
     describe('#History', () => {
@@ -68,7 +76,7 @@ describe('BankAccount', () => {
             assert.deepEqual([
                 {type: "append", amount: amount2, balance: amount1 + amount2},
                 {type: "substract", amount: amount3, balance: amount1 + amount2 - amount3}
-            ], bankAccount.history());
+            ], bankAccount.getHistory());
         })
     })
 })
