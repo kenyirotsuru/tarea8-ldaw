@@ -51,15 +51,15 @@ describe('BankAccount', () => {
         //Merge de las cuentas
         bankAccount.merge(bankAccount2);
 
+        //Prueba history
         it('should return the merged history of two Accounts', () => {
-            //prueba history
             assert.deepEqual(
                 [
                     {type: "append", amount: amount3, balance: amount1 + amount3},
                     {type: "substract", amount: amount4, balance: amount2 - amount4}
                 ], bankAccount.getHistory())
         })
-
+        //Prueba valor actual
         it('should return the current balance of the merged accounts', () => {
             assert.equal(amount1 + amount3 + amount2 - amount4, bankAccount.getAmount());
         })        
