@@ -28,7 +28,7 @@ describe('VectorCalc', () => {
     describe('#dot', () => {
         let v1 = { x: 4, y: 3 }
         let v2 = { x: 1, y: 3 }
-        it('should substract the vectors', () => {
+        it('should get the dot product of the vectors', () => {
             assert.equal(13, VectorCalculator.dot(v1,v2))
         })
     })
